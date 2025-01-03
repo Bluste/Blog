@@ -26,8 +26,7 @@ namespace SimpleBlog.Areas.User.Controllers
                 comment.Create_At = DateTime.Now;
                 comment.Update_At = DateTime.Now;
                 comment.IdentityUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
-                     ?? User.FindFirst("sub")?.Value; ; // Assuming you store user ID in Identity
-                //comment.PostId
+                     ?? User.FindFirst("sub")?.Value; 
 
                 _db.Comments.Add(comment);
                 _db.SaveChanges();

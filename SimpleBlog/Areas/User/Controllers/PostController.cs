@@ -20,13 +20,11 @@ namespace SimpleBlog.Areas.User.Controllers
         {
             var posts = _db.Posts.Include(p => p.IdentityUser).AsQueryable();
 
-            // Handle search query if it's provided
             if (!string.IsNullOrEmpty(searchQuery))
             {
                 posts = posts.Where(p => p.Title.Contains(searchQuery));
             }
 
-            // Pass the searchQuery to the view using ViewData
             ViewData["SearchQuery"] = searchQuery;
 
             return View(posts.ToList());
@@ -45,7 +43,7 @@ namespace SimpleBlog.Areas.User.Controllers
                 post.Create_At = DateTime.Now;
                 post.Update_At = DateTime.Now;
                 post.IdentityUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
-                     ?? User.FindFirst("sub")?.Value; ; // Assuming you store user ID in Identity
+                     ?? User.FindFirst("sub")?.Value;
 
                 _db.Posts.Add(post);
                 _db.SaveChanges();
@@ -60,64 +58,54 @@ namespace SimpleBlog.Areas.User.Controllers
                 }
                 return View(post);
             }
-
-            return View(post);
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            // Get the post by ID
             var post = _db.Posts.FirstOrDefault(p => p.Id == id);
 
-            // Check if the post exists
             if (post == null)
             {
-                return NotFound(); // Return 404 if not found
+                return NotFound(); 
             }
-
             // Ensure the logged-in user is the author of the post
             if (post.IdentityUserId != User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
             {
-                return Unauthorized(); // Return 401 if the user is not the author
+                return Unauthorized(); 
             }
-
-            return View(post); // Return the post to the view for editing
+            return View(post); 
         }
 
         // Edit [POST] Action
         [HttpPost]
         public IActionResult Edit(int id, Post post)
         {
-            // Get the original post
             var originalPost = _db.Posts.FirstOrDefault(p => p.Id == id);
 
-            // Check if the post exists
             if (originalPost == null)
             {
                 return NotFound();
             }
-
-            // Ensure the logged-in user is the author of the post
+            
             if (originalPost.IdentityUserId != User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
             {
-                return Unauthorized(); // Return 401 if the user is not the author
+                return Unauthorized(); 
             }
 
             if (ModelState.IsValid)
             {
-                // Update the original post with new values
+                
                 originalPost.Title = post.Title;
                 originalPost.Content = post.Content;
-                originalPost.Update_At = DateTime.Now; // Update the timestamp
+                originalPost.Update_At = DateTime.Now;
 
-                // Save the changes to the database
                 _db.SaveChanges();
 
-                return RedirectToAction("Index", "Home"); // Redirect after successful update
+                return RedirectToAction("Index", "Home");
             }
 
-            return View(post); // Return the updated post to the view in case of errors
+            return View(post); 
         }
 
         [HttpPost]
@@ -131,23 +119,20 @@ namespace SimpleBlog.Areas.User.Controllers
                 return NotFound();
             }
 
-            // Ensure the logged-in user is the one who created the post
             if (post.IdentityUserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
                 return Unauthorized();
             }
 
-            // Delete all associated comments before deleting the post
             if (post.Comments != null)
             {
-                _db.Comments.RemoveRange(post.Comments);  // Removes all comments related to the post
+                _db.Comments.RemoveRange(post.Comments); 
             }
 
-            _db.Posts.Remove(post);  // Removes the post itself
-            _db.SaveChanges();  // Save the changes to the database
+            _db.Posts.Remove(post);  
+            _db.SaveChanges();  
 
             return RedirectToAction("Index", "Home");
         }
-
     }
 }

@@ -1,0 +1,11 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IdentityUser
+
+<h2>Delete User</h2>
+
+<p>Are you sure you want to delete the user <strong>@Model.UserName</strong>?</p>
+
+<form method="post">
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a class="btn btn-secondary" href="@Url.Action("Index", "User")">Cancel</a>
+</form>

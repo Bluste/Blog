@@ -21,11 +21,11 @@ namespace SimpleBlog.Areas.User.Controllers
         public IActionResult Index()
         {
             var posts = _db.Posts
-                                .Include(p => p.Comments)  // Include comments
-                                .Include(p => p.IdentityUser)  // Include IdentityUser
+                                .Include(p => p.Comments)  
+                                .Include(p => p.IdentityUser) 
                                 .ToList();
 
-            return View(posts);  // Passing posts to the view
+            return View(posts);  
         }
 
         public IActionResult Privacy()
