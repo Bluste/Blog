@@ -3,20 +3,24 @@ using Microsoft.AspNetCore.Mvc;
 using SimpleBlog.Data;
 using Microsoft.AspNetCore.Authorization;
 using SimpleBlog.Data;
+using SimpleBlog.Utility;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SimpleBlog.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles = "Admin")] 
+    [Authorize(Roles = SD.Role_Admin)] 
     public class UserController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ApplicationDbContext _context;
 
-        public UserController(UserManager<IdentityUser> userManager, ApplicationDbContext context)
+        public UserController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _context = context;
+            _roleManager = roleManager;
         }
 
         public IActionResult Index()
@@ -27,11 +31,17 @@ namespace SimpleBlog.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
+            ViewBag.Roles = _roleManager.Roles.Select(r => new SelectListItem
+            {
+                Value = r.Name,
+                Text = r.Name
+            }).ToList();
+
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string username, string email, string password)
+        public async Task<IActionResult> Create(string username, string email, string password, string role)
         {
             if (ModelState.IsValid)
             {
@@ -40,6 +50,10 @@ namespace SimpleBlog.Areas.Admin.Controllers
 
                 if (result.Succeeded)
                 {
+                    if (!string.IsNullOrEmpty(role) && await _roleManager.RoleExistsAsync(role))
+                    {
+                        await _userManager.AddToRoleAsync(user, role);
+                    }
                     return RedirectToAction("Index");
                 }
                 else
@@ -50,6 +64,11 @@ namespace SimpleBlog.Areas.Admin.Controllers
                     }
                 }
             }
+            ViewBag.Roles = _roleManager.Roles.Select(r => new SelectListItem
+            {
+                Value = r.Name,
+                Text = r.Name
+            }).ToList();
             return View();
         }
 
