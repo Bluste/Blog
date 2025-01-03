@@ -1,0 +1,194 @@
+/* General Styles */
+body {
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2c3e50;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container for Blog Posts */
+.container {
+    max-width: 1200px;
+    margin-top: 50px;
+}
+
+/* Heading Styles */
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #34495e;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Search Form */
+.search-container {
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    .search-container input[type="text"] {
+        border-radius: 25px;
+        border: 1px solid #ddd;
+        padding: 12px;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        background-color: #ffffff;
+    }
+
+        .search-container input[type="text"]:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.6);
+        }
+
+    .search-container button {
+        border-radius: 25px;
+        background-color: #3498db;
+        color: white;
+        font-size: 1.1rem;
+        padding: 12px 20px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .search-container button:hover {
+            background-color: #2980b9;
+        }
+
+/* Blog Post Card Styles */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #34495e;
+}
+
+.card-text {
+    color: #7f8c8d;
+    font-size: 1rem;
+}
+
+.card-footer {
+    background-color: transparent;
+    border-top: none;
+    font-size: 0.875rem;
+    color: #7f8c8d;
+}
+
+    .card-footer .username {
+        font-weight: bold;
+    }
+
+    .card-footer .date {
+        font-style: italic;
+    }
+
+/* Blog Post Hover Effects */
+.card:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+
+/* Comments Section */
+.comment-card {
+    background-color: #ecf0f1;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease;
+}
+
+    .comment-card:hover {
+        background-color: #dfe6e9;
+    }
+
+    .comment-card p {
+        font-size: 1rem;
+        color: #2c3e50;
+    }
+
+    .comment-card .username {
+        font-weight: bold;
+        color: #2980b9;
+    }
+
+    .comment-card .date {
+        font-size: 0.85rem;
+        color: #7f8c8d;
+    }
+
+/* Comment Form Styles */
+textarea {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    width: 100%;
+    resize: vertical;
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+    transition: border-color 0.3s ease;
+}
+
+    textarea:focus {
+        border-color: #3498db;
+        outline: none;
+    }
+
+button[type="submit"] {
+    border-radius: 8px;
+    background-color: #3498db;
+    color: white;
+    font-size: 1rem;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    button[type="submit"]:hover {
+        background-color: #2980b9;
+    }
+
+/* Footer and Additional Spacing */
+.mt-5 {
+    margin-top: 50px;
+}
+
+.mb-4 {
+    margin-bottom: 30px;
+}
+
+/* Responsive Design for Smaller Devices */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .search-container input[type="text"] {
+        width: 100%;
+    }
+
+    .search-container button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
